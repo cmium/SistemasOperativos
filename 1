@@ -1,24 +1,24 @@
 package cn.taskmanager;
 import java.util.*;
-
 /**
  * @author Carlos_Nimacache
  */
 
-//Clase Tareas
+// Clase Tareas
 class Task {
     String name;
     int priority;
     boolean completed;
 
     public Task(String name, int priority) {
+            
         this.name = name;
         this.priority = priority;
         this.completed = false;
     }
 }
 
-//Clase Usuarios
+// Clase Usuarios
 class User {
     String name;
     Queue<Task> taskQueue;
@@ -29,7 +29,7 @@ class User {
     }
 }
 
-//Clase administracion de tareas
+// Clase administración de tareas
 public class TaskManager {
     Queue<Task> fifoQueue = new LinkedList<>();
     PriorityQueue<Task> priorityQueue = new PriorityQueue<>((t1, t2) -> Integer.compare(t2.priority, t1.priority));
@@ -68,8 +68,7 @@ public class TaskManager {
         if (!roundRobinUser.taskQueue.isEmpty()) {
             Task roundRobinTask = roundRobinUser.taskQueue.poll();
             roundRobinTask.completed = true;
-            System.out.println("-1"
-                    + "Round Robin tarea completada para " + roundRobinUser.name + ": " + roundRobinTask.name);
+            System.out.println("-Round Robin tarea completada para " + roundRobinUser.name + ": " + roundRobinTask.name);
         }
     }
 
@@ -93,23 +92,35 @@ public class TaskManager {
             }
         }
     }
+// Método para mostrar la tabla de procesos con encabezado e información específica
+public static void mostrarTablaDeProcesos() {
+    System.out.println("Tabla de Procesos");
+    System.out.printf("%-10s %-20s %-20s %-20s%n", "Proceso", "Consumo de CPU (ms)", "Consumo de E/S (ms)", "Tiempo de Llegada (ms)");
+    System.out.printf("%-10s %-20d %-20d %-20d%n", "P1", 20, 5, 0);
+    System.out.printf("%-10s %-20d %-20d %-20d%n", "P2", 15, 10, 5);
+    System.out.printf("%-10s %-20d %-20d %-20d%n", "P3", 30, 5, 10);
+    System.out.printf("%-10s %-20d %-20d %-20d%n", "P4", 10, 20, 15);
+    System.out.printf("%-10s %-20d %-20d %-20d%n", "P5", 25, 15, 20);
+}
+
+
 
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
         Scanner scanner = new Scanner(System.in);
-
+        
         while (true) {
             System.out.println("\n- - - - - - - - - - - - - - - - - - - - - - ");
             System.out.println("1. Agregar Usuario");
             System.out.println("2. Agregar Tarea");
             System.out.println("3. Completar Tarea en todos los algoritmos");
             System.out.println("4. Mostrar Estado de Tareas");
-            System.out.println("5. Salir");
+            System.out.println("5. Mostrar Tabla de Procesos"); // Nueva opción
+            System.out.println("6. Salir");
 
-            System.out.println("\n>  ");
+            System.out.print("\n>  ");
             int choice = scanner.nextInt();
             scanner.nextLine();
-            
 
             switch (choice) {
                 case 1:
@@ -140,6 +151,10 @@ public class TaskManager {
                     taskManager.printTaskStatus();
                     break;
                 case 5:
+                    TaskManager.mostrarTablaDeProcesos();
+                    break;
+
+                case 6:
                     scanner.close();
                     System.exit(0);
                 default:
@@ -148,3 +163,4 @@ public class TaskManager {
         }
     }
 }
+
